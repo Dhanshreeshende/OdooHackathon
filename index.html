@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>FleetFlow Dashboard</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#020617;
+  color:white;
+}
+
+.nav{
+  background:#0f172a;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.container{
+  padding:20px;
+  max-width:900px;
+  margin:auto;
+}
+
+.card{
+  background:#0f172a;
+  padding:15px;
+  margin:12px 0;
+  border-radius:10px;
+  transition:.3s;
+  box-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+
+.card:hover{
+  transform:scale(1.03);
+}
+
+button{
+  padding:10px 15px;
+  margin:8px 5px;
+  border:none;
+  border-radius:6px;
+  background:#22c55e;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+input{
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  margin-right:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="nav">
+  <h2>🚚 FleetFlow</h2>
+  <button onclick="location='login.html'">Logout</button>
+</div>
+
+<div class="container">
+
+<h2>Fleet Dashboard</h2>
+
+<button onclick="aiRoute()">AI Fleet Intelligence</button>
+
+<br><br>
+
+<input id="vehicleName" placeholder="Enter vehicle name">
+<button onclick="addVehicle()">Add Vehicle</button>
+
+<h3>Vehicles</h3>
+<div id="vehicles"></div>
+
+</div>
+<h3>Fleet KPIs</h3>
+
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+  <div class="card">Active Fleet: <span id="active"></span></div>
+  <div class="card">Maintenance: <span id="maint"></span></div>
+  <div class="card">Idle: <span id="idle"></span></div>
+</div>
+
+<script>
+
+// Fetch vehicles from backend
+fetch("http://localhost:5000/api/vehicles")
+.then(res => res.json())
+.then(data => {
+  const div = document.getElementById("vehicles");
+
+  data.forEach(v => {
+    div.innerHTML += `
+      <div class="card">
+        <h3>${v.name}</h3>
+        <p>Status: ${v.status}</p>
+        <p>Location: ${v.location}</p>
+      </div>
+    `;
+  });
+});
+
+// AI demo
+function aiRoute(){
+  alert("AI Predicting Delay & Optimizing Route 🚀");
+}
+
+// validation demo
+function addVehicle(){
+  const name = document.getElementById("vehicleName").value;
+
+  if(name === ""){
+    alert("Enter vehicle name");
+    return;
+  }
+
+  const div = document.getElementById("vehicles");
+
+  div.innerHTML += `
+    <div class="card">
+      <h3>${name}</h3>
+      <p>Status: Active</p>
+      <p>Location: Unknown</p>
+    </div>
+  `;
+}
+</script>
+<script>
+
+fetch("http://localhost:5000/api/vehicles")
+.then(res => res.json())
+.then(data => {
+
+  const div = document.getElementById("vehicles");
+
+  let active=0, maint=0, idle=0;
+
+  data.forEach(v => {
+
+    if(v.status==="Active") active++;
+    if(v.status==="Maintenance") maint++;
+    if(v.status==="Idle") idle++;
+
+    div.innerHTML += `
+      <div class="card">
+        <h3>${v.name}</h3>
+        <p>Status: ${v.status}</p>
+        <p>Location: ${v.location}</p>
+
+        <button onclick="service('${v.name}')">Service</button>
+        <button onclick="dispatch('${v.name}')">Dispatch</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("active").innerText = active;
+  document.getElementById("maint").innerText = maint;
+  document.getElementById("idle").innerText = idle;
+});
+
+function service(name){
+  alert(name+" moved to maintenance");
+}
+
+function dispatch(name){
+  alert(name+" dispatched for trip");
+}
+
+function aiRoute(){
+  alert("AI Predicting Delay 🚀");
+}
+
+function addVehicle(){
+  const name = document.getElementById("vehicleName").value;
+
+  if(name===""){
+    alert("Enter vehicle name");
+    return;
+  }
+
+  const div=document.getElementById("vehicles");
+
+  div.innerHTML += `
+    <div class="card">
+      <h3>${name}</h3>
+      <p>Status: Active</p>
+      <p>Location: Unknown</p>
+    </div>
+  `;
+}
+
+</script>
+</body>
+</html>

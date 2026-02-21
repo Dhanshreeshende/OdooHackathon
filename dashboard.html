@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>FleetFlow Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="nav">
+  <h2>🚚 FleetFlow</h2>
+  <div>
+    <button onclick="location='vehicles.html'">Vehicles</button>
+    <button onclick="location='dispatch.html'">Dispatch</button>
+    <button onclick="location='analytics.html'">Analytics</button>
+    <button onclick="location='auth.html'">Logout</button>
+  </div>
+</div>
+
+<div class="container">
+
+<h2>Command Center</h2>
+
+<div class="card">Active Fleet: <span id="active"></span></div>
+<div class="card">Maintenance: <span id="maint"></span></div>
+<div class="card">Idle: <span id="idle"></span></div>
+
+</div>
+
+<script>
+fetch("http://localhost:5000/api/vehicles")
+.then(res=>res.json())
+.then(data=>{
+ let a=0,m=0,i=0;
+ data.forEach(v=>{
+   if(v.status==="Active") a++;
+   if(v.status==="Maintenance") m++;
+   if(v.status==="Idle") i++;
+ });
+
+ document.getElementById("active").innerText=a;
+ document.getElementById("maint").innerText=m;
+ document.getElementById("idle").innerText=i;
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Dispatch</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="nav">
+  <h2>Dispatch Center</h2>
+  <button onclick="location='dashboard.html'">Back</button>
+</div>
+
+<div class="container">
+
+<h2>Create Trip</h2>
+
+<input id="weight" placeholder="Cargo weight">
+<button onclick="trip()">Dispatch</button>
+
+<p id="msg"></p>
+
+</div>
+
+<script>
+function trip(){
+ const w=document.getElementById("weight").value;
+
+ if(w>500){
+  document.getElementById("msg").innerText="Capacity exceeded ❌";
+ }else{
+  document.getElementById("msg").innerText="Trip dispatched ✅";
+ }
+}
+</script>
+
+</body>
+</html>
