@@ -1,24 +1,31 @@
 {
-  "name": "fleetflow-frontend",
+  "name": "fleetflow-backend",
   "version": "1.0.0",
-  "description": "FleetFlow React Frontend",
-  "type": "module",
+  "description": "FleetFlow REST API — Node.js + Express + PostgreSQL",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "seed": "node src/scripts/seed.js",
     "lint": "eslint src/"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.23.1"
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.11.5",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.0",
-    "vite": "^5.2.11",
-    "eslint": "^9.3.0",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-hooks": "^4.6.2"
+    "nodemon": "^3.1.2",
+    "eslint": "^9.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
